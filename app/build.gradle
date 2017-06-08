@@ -1,0 +1,97 @@
+apply plugin: 'com.android.application'
+apply plugin: 'packer'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    signingConfigs {
+        config {
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+            storeFile file('../maoai_xianyu.jks')
+            storePassword KEYSTORE_PASSWORD
+            v2SigningEnabled false
+        }
+    }
+
+    defaultConfig {
+        applicationId "cn.mao.gradlelearn"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+
+        debug {
+            // 是否继续混淆
+            minifyEnabled false
+            resValue "string", "app_name", "Gradle Debug"
+            resValue "color", "flavor_color", "#ff0000"
+            buildConfigField("String", "API_URL", "\"http://test.example.com/api/\"")
+            buildConfigField("boolean", "LOG_HTTP_CALLS", "true")
+            signingConfig signingConfigs.config
+            // 混淆文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
+            resValue "color", "flavor_color", "#0000ff"
+            resValue "string", "app_name", "Gradle Release"
+            buildConfigField("String", "API_URL", "\"http://example.com/api/\"")
+            buildConfigField("boolean", "LOG_HTTP_CALLS", "false")
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        staging.initWith(buildTypes.debug)
+        staging {
+            applicationIdSuffix ".staging"
+            versionNameSuffix "-staging"
+            debuggable = false
+            resValue "string", "app_name", "Gradle Stage"
+        }
+    }
+
+    // 使用lamd
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+    //多个flavors构建变体
+    /*flavorDimensions "color"
+    productFlavors{
+        red {
+            applicationIdSuffix ".red"
+            versionNameSuffix "-red"
+            versionCode 3
+            flavorDimension "color"
+            resValue "color", "flavor_color", "#ff0000"
+        }
+        blue {
+            flavorDimension "color"
+            resValue "color", "flavor_color", "#0000ff"
+        }
+    }*/
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    debugCompile 'com.github.zhaokaiqiang.klog:library:1.6.0'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.mcxiaoke.gradle:packer-helper:1.0.2'
+    compile 'com.jakewharton:butterknife:8.0.1'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+}

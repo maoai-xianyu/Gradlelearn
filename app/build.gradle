@@ -12,7 +12,7 @@ android {
         config {
             keyAlias KEY_ALIAS
             keyPassword KEY_PASSWORD
-            storeFile file('../maoai_xianyu.jks')
+            storeFile file('../mvpproject.jks')
             storePassword KEYSTORE_PASSWORD
             v2SigningEnabled false
         }
@@ -89,9 +89,9 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    debugCompile 'com.github.zhaokaiqiang.klog:library:1.6.0'
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.mcxiaoke.gradle:packer-helper:1.0.2'
     compile 'com.jakewharton:butterknife:8.0.1'
     apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    compile 'com.orhanobut:logger:2.1.1'
 }

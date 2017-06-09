@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.socks.library.KLog;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        Logger.addLogAdapter(new AndroidLogAdapter());
         tvShowVersion.setText(getString(R.string.app_name));
         if (BuildConfig.LOG_HTTP_CALLS) {
             tvShowApiUrl.setText(String.valueOf("版本 " + BuildConfig.API_URL));
@@ -44,14 +46,8 @@ public class MainActivity extends AppCompatActivity {
             tvShowVersionName.setText(String.valueOf("release版本name " + BuildConfig.VERSION_NAME));
         }
 
-        KLog.d("Inner Class Test");
 
-        KLog.d("这是测试");
-        KLog.e("这是测试");
-        KLog.i("这是测试");
-        KLog.w("这是测试");
-        KLog.a("这是测试");
-        KLog.debug("这是测试");
+        Logger.d("测试");
 
     }
 }

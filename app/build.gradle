@@ -22,8 +22,8 @@ android {
         applicationId "cn.mao.gradlelearn"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode VERSION_CODE as Integer
+        versionName VERSION_NAME as String
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

@@ -1,0 +1,2 @@
+# Gradlelearn
+gradle clean
